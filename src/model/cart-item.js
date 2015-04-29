@@ -9,7 +9,6 @@ var promotions = Promotion.loadPromotion();
 function CartItem(barcode, count) {
     this.barcode = barcode;
     this.count = count;
-    this.savedCount = 0;
 
     var items = Item.loadAllItems();
     this.item = _.find(items, {barcode: barcode});
@@ -23,9 +22,17 @@ CartItem.prototype.toString = function () {
         '，小计：' + this.getSubtotal().toFixed(2) + '(元)';
 };
 
-CartItem.prototype.getSubtotal = function() {
+CartItem.prototype.getSubtotal = function () {
+    var itemPromotion = promotions[0].getPromotion(this);
 
-    return promotions[0].getSubtotal(this);
+    return itemPromotion.subtotal;
+};
+
+CartItem.prototype.toPromotionString = function () {
+
+    var itemPromotion = promotions[0].getPromotion(this);
+
+    return '名称：' + this.item.name + '，数量：' + itemPromotion.savedCount + this.item.unit;
 };
 
 module.exports = CartItem;

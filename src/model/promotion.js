@@ -24,19 +24,21 @@ Promotion.prototype.isPromotion = function (cartItem) {
     });
 };
 
-Promotion.prototype.getSubtotal = function (cartItem) {
+Promotion.prototype.getPromotion = function (cartItem) {
     var subtotal = 0;
+    var savedCount = 0;
 
     var isPromotion = this.isPromotion(cartItem);
 
     if(isPromotion) {
-        var realCount = cartItem.count - parseInt(cartItem.count/3);
+        savedCount = parseInt(cartItem.count/3);
+        var realCount = cartItem.count - savedCount;
         subtotal = cartItem.item.price * realCount;
     } else {
         subtotal = cartItem.item.price * cartItem.count;
     }
 
-    return subtotal;
+    return {subtotal: subtotal, savedCount: savedCount};
 };
 
 module.exports = Promotion;

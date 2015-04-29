@@ -17,4 +17,17 @@ describe('cartItem', function() {
             expect(text).to.equal('名称：雪碧，数量：3瓶，单价：3.00(元)，小计：6.00(元)');
         });
     });
+
+    describe('toPromotionString', function() {
+
+        it('should return correct promotion string', function() {
+
+            var item = 'ITEM000001';
+
+            var cartItem = new CartItem(item, 3);
+            var text = cartItem.toPromotionString();
+
+            expect(text).to.equal('名称：雪碧，数量：1瓶');
+        });
+    });
 });
