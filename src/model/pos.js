@@ -3,11 +3,7 @@
 var _ = require('lodash');
 var Item = require('./item.js');
 
-function Pos() {
-
-}
-
-Pos.prototype.scan = function(barcodeInfo) {
+function getCartItem(barcodeInfo) {
     var cartItem = {};
     var items = Item.loadAllItems();
 
@@ -19,6 +15,29 @@ Pos.prototype.scan = function(barcodeInfo) {
     cartItem.count = count;
 
     return cartItem;
+}
+
+function Pos() {
+
+}
+
+Pos.prototype.scan = function(barcodeInfos) {
+    var cartItems = [];
+
+    _.forEach(barcodeInfos, function(barcodeInfo) {
+        var currentCartItem = getCartItem(barcodeInfo);
+
+        var existCartItem = _.find(cartItems, function(cartItem) {
+            return cartItem.item.barcode === currentCartItem.item.barcode;
+        });
+
+        if(!existCartItem) {
+            cartItems.push(currentCartItem);
+        } else {
+            existCartItem.count += currentCartItem.count;
+        }
+    });
+    return cartItems;
 };
 
 module.exports = Pos;
