@@ -30,4 +30,16 @@ describe('cartItem', function() {
             expect(text).to.equal('名称：雪碧，数量：1瓶');
         });
     });
+
+    describe('getTotalString', function() {
+
+        it('should return correct total', function() {
+
+            var cartItem = new CartItem('ITEM000001', 3);
+            var text = cartItem.getTotalString();
+
+            expect(text).to.equal('总计：21.00(元)\n' + '节省：4.00(元)');
+
+        });
+    });
 });

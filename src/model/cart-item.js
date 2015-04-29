@@ -6,12 +6,16 @@ var Item = require('./item.js');
 var Promotion = require('./promotion.js');
 var promotions = Promotion.loadPromotion();
 
+var cartItemlist = [];
+
 function CartItem(barcode, count) {
     this.barcode = barcode;
     this.count = count;
 
     var items = Item.loadAllItems();
     this.item = _.find(items, {barcode: barcode});
+
+    cartItemlist.push(this);
 }
 
 CartItem.prototype.toString = function () {
