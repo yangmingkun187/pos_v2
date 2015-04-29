@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var Item = require('./item.js');
 
