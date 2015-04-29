@@ -18,12 +18,16 @@ Promotion.loadPromotion = function() {
     ];
 };
 
+Promotion.prototype.isPromotion = function (cartItem) {
+    return _.some(this.barcodes, function(barcode) {
+        return barcode === cartItem.barcode;
+    });
+};
+
 Promotion.prototype.getSubtotal = function (cartItem) {
     var subtotal = 0;
 
-    var isPromotion = _.some(this.barcodes, function(barcode) {
-        return barcode === cartItem.barcode;
-    });
+    var isPromotion = this.isPromotion(cartItem);
 
     if(isPromotion) {
         var realCount = cartItem.count - parseInt(cartItem.count/3);

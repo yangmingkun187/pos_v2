@@ -9,6 +9,7 @@ var promotions = Promotion.loadPromotion();
 function CartItem(barcode, count) {
     this.barcode = barcode;
     this.count = count;
+    this.savedCount = 0;
 
     var items = Item.loadAllItems();
     this.item = _.find(items, {barcode: barcode});
