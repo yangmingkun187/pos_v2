@@ -3,6 +3,8 @@
 var _ = require('lodash');
 
 var Item = require('./item.js');
+var Promotion = require('./promotion.js');
+var promotions = Promotion.loadPromotion();
 
 function CartItem(barcode, count) {
     this.barcode = barcode;
@@ -21,7 +23,8 @@ CartItem.prototype.toString = function () {
 };
 
 CartItem.prototype.getSubtotal = function() {
-    return this.count * this.item.price;
+
+    return promotions[0].getSubtotal(this);
 };
 
 module.exports = CartItem;
