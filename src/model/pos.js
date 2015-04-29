@@ -5,11 +5,16 @@ function Pos() {
 
 }
 
-Pos.prototype.scan = function(barcode) {
-    var cartItem;
+Pos.prototype.scan = function(barcodeInfo) {
+    var cartItem = {};
     var items = Item.loadAllItems();
 
-    var cartItem = _.find(items, {barcode: barcode});
+    var infoArray = barcodeInfo.split('-');
+    var barcode = infoArray[0];
+    var count = parseInt(infoArray[1]) || 1;
+
+    cartItem.item = _.find(items, {barcode: barcode});
+    cartItem.count = count;
 
     return cartItem;
 };
