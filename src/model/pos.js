@@ -2,19 +2,18 @@
 
 var _ = require('lodash');
 var Item = require('./item.js');
+var CartItem = require('./cart-item.js');
 
 function getCartItem(barcodeInfo) {
-    var cartItem = {};
     var items = Item.loadAllItems();
 
     var infoArray = barcodeInfo.split('-');
     var barcode = infoArray[0];
     var count = parseInt(infoArray[1]) || 1;
 
-    cartItem.item = _.find(items, {barcode: barcode});
-    cartItem.count = count;
+    var item = _.find(items, {barcode: barcode});
 
-    return cartItem;
+    return new CartItem(item.barcode, count);
 }
 
 function Pos() {
